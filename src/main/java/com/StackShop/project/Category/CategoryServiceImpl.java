@@ -1,5 +1,6 @@
 package com.StackShop.project.Category;
 
+import jdk.jfr.Category;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import java.util.UUID;
 @Service
 public class CategoryServiceImpl implements CategoryInterface {
     private List<CategoryModel> categories = new ArrayList<>();
-    private Long  nextId = 1L;
+    private Long nextId = 1L;
 
     @Override
     public List<CategoryModel> getAllCategories() {
@@ -22,5 +23,16 @@ public class CategoryServiceImpl implements CategoryInterface {
         categories.add(categoryModel);
 
         return null;
+    }
+
+    @Override
+    public String deleteCategory(Long categoryId) {
+        CategoryModel categoryModel = categories.stream()
+                .filter(cat -> cat.getCategoryId().equals(categoryId))
+                .findFirst().get();
+        categories.remove(categoryModel);
+               // .orElse(null);
+        return "Category with categoryId" + categoryId + "deleted successfully!";
+
     }
 }

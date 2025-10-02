@@ -7,4 +7,6 @@ import java.util.List;
 public interface CategoryInterface {
     List<CategoryModel> getAllCategories();
     Void createCategory(CategoryModel categoryModel);
+
+    String deleteCategory(Long categoryId);
 }
