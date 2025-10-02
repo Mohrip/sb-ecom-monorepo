@@ -5,20 +5,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.server.ResponseStatusException;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 public class CategoryController {
 
-    private CategoryInterface categoryInterface;
+    private CategoryService categoryInterface;
 
     @Autowired
-    public CategoryController(CategoryInterface categoryInterface) {
+    public CategoryController(CategoryService categoryInterface) {
         this.categoryInterface = categoryInterface;
     }
 
@@ -37,6 +35,8 @@ public class CategoryController {
         return new ResponseEntity<>("Category created successfully", HttpStatus.CREATED);
 
 
+
+
     }
 
     @DeleteMapping("/api/admin/categories/{categoryId}")
@@ -49,6 +49,16 @@ public class CategoryController {
     } catch (ResponseStatusException e) {
             return new ResponseEntity<>(e.getMessage(), e.getStatusCode());
     }
+    }
+
+    @PutMapping("/api/admin/categories/{categoryId}")
+    public ResponseEntity<String> updateCategory(@PathVariable Long categoryId, @RequestBody CategoryModel categoryModel) {
+        try {
+            String status = categoryInterface.updateCategory(categoryId, categoryModel);
+            return new ResponseEntity<>(status, HttpStatus.OK);
+        } catch (ResponseStatusException e) {
+            return new ResponseEntity<>(e.getMessage(), e.getStatusCode());
+        }
     }
 
 }

@@ -1,27 +1,40 @@
 package com.StackShop.project.Category;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "CATEGORY")
 public class CategoryModel {
-    private Long CategoryId;
-    private String CategoryName;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long categoryId;
+    private String categoryName;
+
+    public CategoryModel() {
+    }
+
+    public CategoryModel(String categoryName) {
+        this.categoryName = categoryName;
+    }
 
     public CategoryModel(String categoryName, Long categoryId) {
-        this.CategoryName = categoryName;
-        this.CategoryId = categoryId;
+        this.categoryName = categoryName;
+        this.categoryId = categoryId;
     }
 
     public Long getCategoryId() {
-        return CategoryId;
+        return categoryId;
     }
 
     public void setCategoryId(Long categoryId) {
-        CategoryId = categoryId;
+        this.categoryId = categoryId;
     }
 
     public String getCategoryName() {
-        return CategoryName;
+        return categoryName;
     }
 
     public void setCategoryName(String categoryName) {
-        CategoryName = categoryName;
+        this.categoryName = categoryName;
     }
 }
