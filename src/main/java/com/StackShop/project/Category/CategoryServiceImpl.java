@@ -29,7 +29,11 @@ public class CategoryServiceImpl implements CategoryInterface {
     public String deleteCategory(Long categoryId) {
         CategoryModel categoryModel = categories.stream()
                 .filter(cat -> cat.getCategoryId().equals(categoryId))
-                .findFirst().get();
+                .findFirst().orElse(null);
+        if (categoryModel == null) {
+            return "Category with categoryId" + categoryId + "not found!";
+        }
+
         categories.remove(categoryModel);
                // .orElse(null);
         return "Category with categoryId" + categoryId + "deleted successfully!";
