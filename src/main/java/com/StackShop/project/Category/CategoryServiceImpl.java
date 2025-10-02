@@ -2,6 +2,7 @@ package com.StackShop.project.Category;
 
 import jdk.jfr.Category;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,10 +30,9 @@ public class CategoryServiceImpl implements CategoryInterface {
     public String deleteCategory(Long categoryId) {
         CategoryModel categoryModel = categories.stream()
                 .filter(cat -> cat.getCategoryId().equals(categoryId))
-                .findFirst().orElse(null);
-        if (categoryModel == null) {
-            return "Category with categoryId" + categoryId + "not found!";
-        }
+                .findFirst().orElseThrow(() -> new ResponseStatusException(
+                        org.springframework.http.HttpStatus.NOT_FOUND, "Category not found"
+                ));
 
         categories.remove(categoryModel);
                // .orElse(null);
