@@ -44,7 +44,7 @@ public class CategoryController {
         try{
         String status = categoryInterface.deleteCategory(categoryId);
        // return status;
-          //  return new ResponseEntity<>(status, HttpStatus.OK);
+          // return new ResponseEntity<>(status, HttpStatus.OK);
             return ResponseEntity.status(HttpStatus.OK).body(status);
     } catch (ResponseStatusException e) {
             return new ResponseEntity<>(e.getMessage(), e.getStatusCode());
