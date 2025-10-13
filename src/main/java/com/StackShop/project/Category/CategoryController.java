@@ -1,6 +1,7 @@
 package com.StackShop.project.Category;
 
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,13 +25,12 @@ public class CategoryController {
     public ResponseEntity<List<CategoryModel>> getAllCategories() {
         List<CategoryModel> categories = categoryInterface.getAllCategories();
         return new ResponseEntity<>(categories, HttpStatus.OK);
-        //
-    //return categoryInterface.getAllCategories();
-       // return categories;
+
     }
 
     @PostMapping("/api/public/categories")
-    public ResponseEntity<String> creatCategory(@RequestBody  CategoryModel categoryModel) {
+    //Valid here to return 400 bad request if the request body is invalid
+    public ResponseEntity<String> creatCategory(@Valid @RequestBody  CategoryModel categoryModel) {
         categoryInterface.createCategory(categoryModel);
         return new ResponseEntity<>("Category created successfully", HttpStatus.CREATED);
 

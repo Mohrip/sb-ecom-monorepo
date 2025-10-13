@@ -20,7 +20,7 @@ public class CategoryModel {
     //These annotations ensure that the categoryName field is not null or blank when creating or updating a category.
     // This helps maintain data integrity and prevents invalid entries in the database.
     // These are similar to that model in nestjs
-    @NonNull()
+    @NonNull
     @NotBlank
     private String categoryName;
 
