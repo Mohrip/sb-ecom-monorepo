@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 public class CategoryController {
-
+// Here I'm using the interface to support loose coupling
     private CategoryService categoryInterface;
 
     @Autowired
