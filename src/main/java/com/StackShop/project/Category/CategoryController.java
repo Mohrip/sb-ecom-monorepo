@@ -13,18 +13,20 @@ import java.util.List;
 
 @RestController
 public class CategoryController {
-// Here I'm using the interface to support loose coupling
+    private final CategoryService categoryService;
+    // Here I'm using the interface to support loose coupling
     private CategoryService categoryInterface;
 
     @Autowired
-    public CategoryController(CategoryService categoryInterface) {
+    public CategoryController(CategoryService categoryInterface, CategoryService categoryService) {
         this.categoryInterface = categoryInterface;
+        this.categoryService = categoryService;
     }
 
     @GetMapping("/api/public/categories")
-    public ResponseEntity<List<CategoryModel>> getAllCategories() {
-        List<CategoryModel> categories = categoryInterface.getAllCategories();
-        return new ResponseEntity<>(categories, HttpStatus.OK);
+    public ResponseEntity<CategoryResponse> getAllCategories() {
+        CategoryResponse categoryResponse = categoryService.getAllCategories();
+        return new ResponseEntity<>(categoryResponse, HttpStatus.OK);
 
     }
 
@@ -43,8 +45,6 @@ public class CategoryController {
     public ResponseEntity<String> deleteCategory(@PathVariable Long categoryId) {
         try{
         String status = categoryInterface.deleteCategory(categoryId);
-       // return status;
-          //return new ResponseEntity<>(status, HttpStatus.OK);
             return ResponseEntity.status(HttpStatus.OK).body(status);
     } catch (ResponseStatusException e) {
             return new ResponseEntity<>(e.getMessage(), e.getStatusCode());

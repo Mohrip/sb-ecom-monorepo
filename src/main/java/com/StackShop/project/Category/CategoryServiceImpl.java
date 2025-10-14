@@ -1,5 +1,6 @@
 package com.StackShop.project.Category;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -11,6 +12,7 @@ import com.StackShop.project.Category.CategoryRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -21,17 +23,27 @@ public class CategoryServiceImpl implements CategoryService {
     private CategoryRepository categoryRepository;
     public CategoryServiceImpl(CategoryRepository categoryRepository) {}
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @Override
-    public List<CategoryModel> getAllCategories() {
-        // commented the list and categories to use database and repository to access all methods
-       // return categories;
-        return categoryRepository.findAll();
+    public CategoryResponse getAllCategories() {
+         List<CategoryModel> categories = categoryRepository.findAll();
+         if(categories.isEmpty()) {
+             throw new ResponseStatusException(
+                     org.springframework.http.HttpStatus.NOT_FOUND, "No categories found");
+         }
+            List<CategoryDTO> categoriesDTOs = categories.stream()
+                    .map(categoryModel -> modelMapper.map(categoryModel, CategoryDTO.class))
+                    .toList();
+
+         CategoryResponse categoryResponse = new CategoryResponse();
+            categoryResponse.setContent(categoriesDTOs);
+            return categoryResponse;
     }
 
     @Override
     public Void createCategory(CategoryModel categoryModel) {
-       // categoryModel.setCategoryId(nextId++);
-      //  categories.add(categoryModel);
         categoryRepository.save(categoryModel);
 
         return null;
@@ -47,8 +59,6 @@ public class CategoryServiceImpl implements CategoryService {
                 ));
 
         categoryRepository.delete(categoryModel);
-       // categories.remove(categoryModel);
-               // .orElse(null);
         return "Category with categoryId" + categoryId + "deleted successfully!";
 
     }
