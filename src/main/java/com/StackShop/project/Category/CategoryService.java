@@ -9,7 +9,8 @@ import com.StackShop.project.Category.CategoryModel;
 public interface CategoryService {
    // List<CategoryModel> getAllCategories();
     CategoryResponse getAllCategories();
-    Void createCategory(CategoryModel categoryModel);
+   // Void createCategory(CategoryModel categoryModel);
+    CategoryDTO createCategory(CategoryDTO categoryDTO);
     String deleteCategory(Long categoryId);
     String updateCategory(Long categoryId, CategoryModel categoryModel);
 

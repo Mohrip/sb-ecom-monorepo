@@ -43,10 +43,20 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Void createCategory(CategoryModel categoryModel) {
-        categoryRepository.save(categoryModel);
-
-        return null;
+    public CategoryDTO createCategory(CategoryDTO categoryDTO) {
+        CategoryModel categoryModel = modelMapper.map(categoryDTO, CategoryModel.class);
+        CategoryModel categoryInDb = categoryRepository.findByCategoryName(categoryModel.getCategoryName());
+        if(categoryInDb != null) {
+            throw new ResponseStatusException(
+                    org.springframework.http.HttpStatus.CONFLICT, "Category already exists"
+            );
+        }
+        CategoryModel savedCategory = categoryRepository.save(categoryModel);
+        CategoryDTO savedCategoryDTO = modelMapper.map(savedCategory, CategoryDTO.class);
+        return savedCategoryDTO;
+       // return modelMapper.map(savedCategory, CategoryDTO.class);
+       // categoryRepository.save(categoryModel);
+      //  return null;
     }
 
     @Override

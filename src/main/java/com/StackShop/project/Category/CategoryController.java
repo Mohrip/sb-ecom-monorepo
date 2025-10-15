@@ -14,6 +14,7 @@ import java.util.List;
 @RestController
 public class CategoryController {
     private final CategoryService categoryService;
+    //private final CategoryDTO categoryDTO = new ();
     // Here I'm using the interface to support loose coupling
     private CategoryService categoryInterface;
 
@@ -21,6 +22,7 @@ public class CategoryController {
     public CategoryController(CategoryService categoryInterface, CategoryService categoryService) {
         this.categoryInterface = categoryInterface;
         this.categoryService = categoryService;
+       // this.categoryService = categoryService;
     }
 
     @GetMapping("/api/public/categories")
@@ -32,9 +34,10 @@ public class CategoryController {
 
     @PostMapping("/api/public/categories")
     //Valid here to return 400 bad request if the request body is invalid
-    public ResponseEntity<String> creatCategory(@Valid @RequestBody  CategoryModel categoryModel) {
-        categoryInterface.createCategory(categoryModel);
-        return new ResponseEntity<>("Category created successfully", HttpStatus.CREATED);
+    public ResponseEntity<CategoryDTO> creatCategory(@Valid @RequestBody  CategoryDTO categoryDTO) {
+       CategoryDTO savedCategory = categoryService.createCategory(categoryDTO);
+       // categoryInterface.createCategory(categoryModel);
+        return new ResponseEntity<>(savedCategory, HttpStatus.CREATED);
 
 
 
