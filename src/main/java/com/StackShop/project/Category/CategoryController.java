@@ -38,10 +38,6 @@ public class CategoryController {
        CategoryDTO savedCategory = categoryService.createCategory(categoryDTO);
        // categoryInterface.createCategory(categoryModel);
         return new ResponseEntity<>(savedCategory, HttpStatus.CREATED);
-
-
-
-
     }
 
     @DeleteMapping("/api/admin/categories/{categoryId}")
@@ -55,13 +51,21 @@ public class CategoryController {
     }
 
     @PutMapping("/api/admin/categories/{categoryId}")
-    public ResponseEntity<String> updateCategory(@PathVariable Long categoryId, @RequestBody CategoryModel categoryModel) {
+    public ResponseEntity<CategoryDTO> updateCategory(@PathVariable Long categoryId,@Valid @RequestBody CategoryDTO categoryDTO) {
         try {
-            String status = categoryInterface.updateCategory(categoryId, categoryModel);
-            return new ResponseEntity<>(status, HttpStatus.OK);
+            CategoryDTO updatedCategory = categoryInterface.updateCategory(categoryId, categoryDTO);
+            return new ResponseEntity<>(updatedCategory, HttpStatus.OK);
         } catch (ResponseStatusException e) {
-            return new ResponseEntity<>(e.getMessage(), e.getStatusCode());
+            return new ResponseEntity<>(null, e.getStatusCode());
         }
     }
+//    public ResponseEntity<String> updateCategory(@PathVariable Long categoryId, @RequestBody CategoryModel categoryModel) {
+//        try {
+//            String status = categoryInterface.updateCategory(categoryId, categoryModel);
+//            return new ResponseEntity<>(status, HttpStatus.OK);
+//        } catch (ResponseStatusException e) {
+//            return new ResponseEntity<>(e.getMessage(), e.getStatusCode());
+//        }
+//    }
 
 }
