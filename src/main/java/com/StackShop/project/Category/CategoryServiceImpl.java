@@ -51,7 +51,7 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryDTO createCategory(CategoryDTO categoryDTO) {
         CategoryModel categoryModel = modelMapper.map(categoryDTO, CategoryModel.class);
         CategoryModel categoryInDb = categoryRepository.findByCategoryName(categoryModel.getCategoryName());
-        if(categoryInDb != null) {
+        if (categoryInDb != null) {
             throw new ResponseStatusException(
                     org.springframework.http.HttpStatus.CONFLICT, "Category already exists"
             );
