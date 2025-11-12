@@ -9,10 +9,11 @@ import com.StackShop.project.Category.CategoryModel;
 public interface CategoryService {
    // long CATEGORY_ID_NOT_FOUND = -1L;
    // List<CategoryModel> getAllCategories();
-    CategoryResponse getAllCategories();
+    CategoryResponse getAllCategories(Integer pageNumber, Integer pageSize);
    // Void createCategory(CategoryModel categoryModel);
     CategoryDTO createCategory(CategoryDTO categoryDTO);
-    String deleteCategory(Long categoryId);
+    //String deleteCategory(Long categoryId);
+    CategoryDTO deleteCategory(Long categoryId);
     //String updateCategory(Long categoryId, CategoryModel categoryModel);
     CategoryDTO updateCategory(Long categoryId, CategoryDTO categoryDTO);
 

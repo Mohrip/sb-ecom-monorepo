@@ -2,22 +2,17 @@ package com.StackShop.project.Category;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import com.StackShop.project.Category.CategoryService;
-import com.StackShop.project.Category.CategoryModel;
-import com.StackShop.project.Category.CategoryRepository;
 
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
-   // private List<CategoryModel> categories = new ArrayList<>();
-  //  private Long nextId = 1L;
 
     @Autowired
     private CategoryRepository categoryRepository;
@@ -27,8 +22,13 @@ public class CategoryServiceImpl implements CategoryService {
     private ModelMapper modelMapper;
 
     @Override
-    public CategoryResponse getAllCategories() {
-         List<CategoryModel> categories = categoryRepository.findAll();
+    public CategoryResponse getAllCategories(Integer pageNumber, Integer pageSize) {
+
+        Pageable pageDetaile = PageRequest.of(pageNumber, pageSize);
+        Page<CategoryModel> categoryPage = categoryRepository.findAll(pageDetaile);
+
+         //List<CategoryModel> categories = categoryRepository.findAll();
+        List<CategoryModel> categories = categoryPage.getContent();
          if(categories.isEmpty()) {
              throw new ResponseStatusException(
                      org.springframework.http.HttpStatus.NOT_FOUND, "No categories found");
@@ -54,24 +54,22 @@ public class CategoryServiceImpl implements CategoryService {
         CategoryModel savedCategory = categoryRepository.save(categoryModel);
         CategoryDTO savedCategoryDTO = modelMapper.map(savedCategory, CategoryDTO.class);
         return savedCategoryDTO;
-       // return modelMapper.map(savedCategory, CategoryDTO.class);
-       // categoryRepository.save(categoryModel);
-      //  return null;
     }
 
     @Override
-    public String deleteCategory(Long categoryId) {
-        List<CategoryModel> categories = categoryRepository.findAll();
-        CategoryModel categoryModel = categories.stream()
-                .filter(cat -> cat.getCategoryId().equals(categoryId))
-                .findFirst().orElseThrow(() -> new ResponseStatusException(
+
+    public CategoryDTO deleteCategory(Long categoryId) {
+        CategoryModel categoryModel = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new ResponseStatusException(
                         org.springframework.http.HttpStatus.NOT_FOUND, "Category not found"
                 ));
 
         categoryRepository.delete(categoryModel);
-        return "Category with categoryId" + categoryId + "deleted successfully!";
-
+        CategoryDTO deletedCategoryDTO = modelMapper.map(categoryModel, CategoryDTO.class);
+        return deletedCategoryDTO;
     }
+
+
     @Override
     public CategoryDTO updateCategory(Long categoryId, CategoryDTO categoryDTO) {
         CategoryModel existingCategory = categoryRepository.findById(categoryId)
@@ -83,15 +81,6 @@ public class CategoryServiceImpl implements CategoryService {
         CategoryModel updatedCategory = categoryRepository.save(existingCategory);
         return modelMapper.map(updatedCategory, CategoryDTO.class);
     }
-//    public String updateCategory(Long categoryId, CategoryModel categoryModel) {
-//        CategoryModel existingCategory = categoryRepository.findById(categoryId)
-//                .orElseThrow(() -> new ResponseStatusException(
-//                        org.springframework.http.HttpStatus.NOT_FOUND, "Category not found"
-//                ));
-//
-//        existingCategory.setCategoryName(categoryModel.getCategoryName());
-//        categoryRepository.save(existingCategory);
-//        return "Category updated successfully!";
-//    }
+
 
 }
