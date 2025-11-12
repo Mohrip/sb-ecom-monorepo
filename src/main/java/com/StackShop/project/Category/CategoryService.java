@@ -7,11 +7,14 @@ import com.StackShop.project.Category.CategoryModel;
 // Interfaces instead class to support modularity and decoupling
 // This interface can be implemented by a class to provide actual service logic
 public interface CategoryService {
-    List<CategoryModel> getAllCategories();
-    Void createCategory(CategoryModel categoryModel);
-
-    String deleteCategory(Long categoryId);
-
-    String updateCategory(Long categoryId, CategoryModel categoryModel);
+   // long CATEGORY_ID_NOT_FOUND = -1L;
+   // List<CategoryModel> getAllCategories();
+    CategoryResponse getAllCategories(Integer pageNumber, Integer pageSize);
+   // Void createCategory(CategoryModel categoryModel);
+    CategoryDTO createCategory(CategoryDTO categoryDTO);
+    //String deleteCategory(Long categoryId);
+    CategoryDTO deleteCategory(Long categoryId);
+    //String updateCategory(Long categoryId, CategoryModel categoryModel);
+    CategoryDTO updateCategory(Long categoryId, CategoryDTO categoryDTO);
 
 }
