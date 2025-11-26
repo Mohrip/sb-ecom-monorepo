@@ -1,6 +1,5 @@
 package com.StackShop.project.Category;
 
-import java.util.List;
 import com.StackShop.project.Category.CategoryModel;
 
 
