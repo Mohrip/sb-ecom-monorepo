@@ -7,7 +7,6 @@ import com.StackShop.project.Category.CategoryModel;
 // This interface can be implemented by a class to provide actual service logic
 public interface CategoryService {
     CategoryResponse getAllCategories(Integer pageNumber, Integer pageSize);
-   // Void createCategory(CategoryModel categoryModel);
     CategoryDTO createCategory(CategoryDTO categoryDTO);
     //String deleteCategory(Long categoryId);
     CategoryDTO deleteCategory(Long categoryId);
