@@ -9,7 +9,6 @@ public interface CategoryService {
     CategoryResponse getAllCategories(Integer pageNumber, Integer pageSize);
     CategoryDTO createCategory(CategoryDTO categoryDTO);
     CategoryDTO deleteCategory(Long categoryId);
-    //String updateCategory(Long categoryId, CategoryModel categoryModel);
     CategoryDTO updateCategory(Long categoryId, CategoryDTO categoryDTO);
 
 }
