@@ -28,6 +28,7 @@ public class CategoryServiceImpl implements CategoryService {
         Page<CategoryModel> categoryPage = categoryRepository.findAll(pageDetails);
 
          //List<CategoryModel> categories = categoryRepository.findAll();
+        //
         List<CategoryModel> categories = categoryPage.getContent();
          if(categories.isEmpty()) {
              throw new ResponseStatusException(
