@@ -35,7 +35,7 @@ public class CategoryController {
 
     @PostMapping("/api/public/categories")
     //Valid here to return 400 bad request if the request body is invalid
-    public ResponseEntity<CategoryDTO> creatCategory(@Valid @RequestBody  CategoryDTO categoryDTO) {
+    public ResponseEntity<CategoryDTO> createCategory(@Valid @RequestBody  CategoryDTO categoryDTO) {
        CategoryDTO savedCategory = categoryService.createCategory(categoryDTO);
         return new ResponseEntity<>(savedCategory, HttpStatus.CREATED);
     }
