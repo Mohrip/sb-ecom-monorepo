@@ -79,6 +79,7 @@ public class CategoryServiceImpl implements CategoryService {
 
         categoryRepository.delete(categoryModel);
         CategoryDTO deletedCategoryDTO = modelMapper.map(categoryModel, CategoryDTO.class);
+        log.info("Category deleted: {}", deletedCategoryDTO.getCategoryName());
         return deletedCategoryDTO;
     }
 
@@ -92,6 +93,7 @@ public class CategoryServiceImpl implements CategoryService {
 
         existingCategory.setCategoryName(categoryDTO.getCategoryName());
         CategoryModel updatedCategory = categoryRepository.save(existingCategory);
+        log.info("Category updated: {}", updatedCategory.getCategoryName());
         return modelMapper.map(updatedCategory, CategoryDTO.class);
     }
 
