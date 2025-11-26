@@ -9,8 +9,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 
+import lombok.extern.slf4j.Slf4j;
+
+
+
+
 import java.util.List;
 
+@Slf4j
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
@@ -58,6 +64,8 @@ public class CategoryServiceImpl implements CategoryService {
         }
         CategoryModel savedCategory = categoryRepository.save(categoryModel);
         CategoryDTO savedCategoryDTO = modelMapper.map(savedCategory, CategoryDTO.class);
+        log.info("Category created: {}", savedCategoryDTO.getCategoryName());
+
         return savedCategoryDTO;
     }
 

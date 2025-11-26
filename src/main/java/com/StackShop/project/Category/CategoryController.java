@@ -23,7 +23,7 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping("/api/public/categories")
+    @GetMapping("/api/v1/public/categories")
     public ResponseEntity<CategoryResponse> getAllCategories(
             @RequestParam(name = "pageNumber", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) Integer pageNumber,
             @RequestParam(name = "pageSize", defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) Integer pageSize)
@@ -33,14 +33,14 @@ public class CategoryController {
 
     }
 
-    @PostMapping("/api/public/categories")
+    @PostMapping("/api/v1/public/categories")
     //Valid here to return 400 bad request if the request body is invalid
     public ResponseEntity<CategoryDTO> createCategory(@Valid @RequestBody  CategoryDTO categoryDTO) {
        CategoryDTO savedCategory = categoryService.createCategory(categoryDTO);
         return new ResponseEntity<>(savedCategory, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/api/admin/categories/{categoryId}")
+    @DeleteMapping("/api/v1/admin/categories/{categoryId}")
 //    public ResponseEntity<String> deleteCategory(@PathVariable Long categoryId) {
 //        try{
 //        String status = categoryInterface.deleteCategory(categoryId);
@@ -58,7 +58,7 @@ public class CategoryController {
         }
     }
 
-    @PutMapping("/api/admin/categories/{categoryId}")
+    @PutMapping("/api/v1/admin/categories/{categoryId}")
     public ResponseEntity<CategoryDTO> updateCategory(@PathVariable Long categoryId,@Valid @RequestBody CategoryDTO categoryDTO) {
         try {
             CategoryDTO updatedCategory = categoryInterface.updateCategory(categoryId, categoryDTO);
