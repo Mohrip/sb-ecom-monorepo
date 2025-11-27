@@ -8,21 +8,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-
-import lombok.extern.slf4j.Slf4j;
-
-
-
-
 import java.util.List;
 
-@Slf4j
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
     private CategoryRepository categoryRepository;
-    public CategoryServiceImpl(CategoryRepository categoryRepository) {}
 
     @Autowired
     private ModelMapper modelMapper;
@@ -64,7 +56,6 @@ public class CategoryServiceImpl implements CategoryService {
         }
         CategoryModel savedCategory = categoryRepository.save(categoryModel);
         CategoryDTO savedCategoryDTO = modelMapper.map(savedCategory, CategoryDTO.class);
-        log.info("Category created: {}", savedCategoryDTO.getCategoryName());
 
         return savedCategoryDTO;
     }
@@ -79,7 +70,7 @@ public class CategoryServiceImpl implements CategoryService {
 
         categoryRepository.delete(categoryModel);
         CategoryDTO deletedCategoryDTO = modelMapper.map(categoryModel, CategoryDTO.class);
-        log.info("Category deleted: {}", deletedCategoryDTO.getCategoryName());
+
         return deletedCategoryDTO;
     }
 
@@ -93,7 +84,7 @@ public class CategoryServiceImpl implements CategoryService {
 
         existingCategory.setCategoryName(categoryDTO.getCategoryName());
         CategoryModel updatedCategory = categoryRepository.save(existingCategory);
-        log.info("Category updated: {}", updatedCategory.getCategoryName());
+
         return modelMapper.map(updatedCategory, CategoryDTO.class);
     }
 

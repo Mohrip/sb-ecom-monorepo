@@ -13,13 +13,9 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 public class CategoryController {
     private final CategoryService categoryService;
-    //private final CategoryDTO categoryDTO = new ();
-    // Here I'm using the interface to support loose coupling
-    private CategoryService categoryInterface;
 
     @Autowired
-    public CategoryController(CategoryService categoryInterface, CategoryService categoryService) {
-        this.categoryInterface = categoryInterface;
+    public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
 
@@ -41,17 +37,9 @@ public class CategoryController {
     }
 
     @DeleteMapping("/api/v1/admin/categories/{categoryId}")
-//    public ResponseEntity<String> deleteCategory(@PathVariable Long categoryId) {
-//        try{
-//        String status = categoryInterface.deleteCategory(categoryId);
-//            return ResponseEntity.status(HttpStatus.OK).body(status);
-//    } catch (ResponseStatusException e) {
-//            return new ResponseEntity<>(e.getMessage(), e.getStatusCode());
-//    }
-//    }
     public ResponseEntity<CategoryDTO> deleteCategory(@PathVariable Long categoryId) {
         try {
-            CategoryDTO deletedCategory = categoryInterface.deleteCategory(categoryId);
+            CategoryDTO deletedCategory = categoryService.deleteCategory(categoryId);
             return new ResponseEntity<>(deletedCategory, HttpStatus.OK);
         } catch (ResponseStatusException e) {
             return new ResponseEntity<>(null, e.getStatusCode());
@@ -61,7 +49,7 @@ public class CategoryController {
     @PutMapping("/api/v1/admin/categories/{categoryId}")
     public ResponseEntity<CategoryDTO> updateCategory(@PathVariable Long categoryId,@Valid @RequestBody CategoryDTO categoryDTO) {
         try {
-            CategoryDTO updatedCategory = categoryInterface.updateCategory(categoryId, categoryDTO);
+            CategoryDTO updatedCategory = categoryService.updateCategory(categoryId, categoryDTO);
             return new ResponseEntity<>(updatedCategory, HttpStatus.OK);
         } catch (ResponseStatusException e) {
             return new ResponseEntity<>(null, e.getStatusCode());

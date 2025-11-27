@@ -1,6 +1,5 @@
 HELP.md
 target/
-.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 
@@ -53,9 +52,6 @@ logs/
 *.temp
 *.swp
 *~
-
-# Ignore Maven wrapper and all .mvn files/folders
-.mvn/
 
 # Ignore environment variables file
 .env
