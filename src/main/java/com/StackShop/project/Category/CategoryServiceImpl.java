@@ -23,10 +23,10 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryResponse getAllCategories(Integer pageNumber, Integer pageSize) {
 
         Pageable pageDetails = PageRequest.of(pageNumber, pageSize);
-        Page<CategoryModel> categoryPage = categoryRepository.findAll(pageDetails);
+        Page<Category> categoryPage = categoryRepository.findAll(pageDetails);
 
          //List<CategoryModel>categories = categoryRepository.findAll();
-        List<CategoryModel> categories = categoryPage.getContent();
+        List<Category> categories = categoryPage.getContent();
          if(categories.isEmpty()) {
              throw new ResponseStatusException(
                      org.springframework.http.HttpStatus.NOT_FOUND, "No categories found");
@@ -47,14 +47,14 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDTO createCategory(CategoryDTO categoryDTO) {
-        CategoryModel categoryModel = modelMapper.map(categoryDTO, CategoryModel.class);
-        CategoryModel categoryInDb = categoryRepository.findByCategoryName(categoryModel.getCategoryName());
+        Category categoryModel = modelMapper.map(categoryDTO, Category.class);
+        Category categoryInDb = categoryRepository.findByCategoryName(categoryModel.getCategoryName());
         if (categoryInDb != null) {
             throw new ResponseStatusException(
                     org.springframework.http.HttpStatus.CONFLICT, "Category already exists"
             );
         }
-        CategoryModel savedCategory = categoryRepository.save(categoryModel);
+        Category savedCategory = categoryRepository.save(categoryModel);
         CategoryDTO savedCategoryDTO = modelMapper.map(savedCategory, CategoryDTO.class);
 
         return savedCategoryDTO;
@@ -63,7 +63,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
 
     public CategoryDTO deleteCategory(Long categoryId) {
-        CategoryModel categoryModel = categoryRepository.findById(categoryId)
+        Category categoryModel = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new ResponseStatusException(
                         org.springframework.http.HttpStatus.NOT_FOUND, "Category not found"
                 ));
@@ -77,13 +77,13 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDTO updateCategory(Long categoryId, CategoryDTO categoryDTO) {
-        CategoryModel existingCategory = categoryRepository.findById(categoryId)
+        Category existingCategory = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new ResponseStatusException(
                         org.springframework.http.HttpStatus.NOT_FOUND, "Category not found"
                 ));
 
         existingCategory.setCategoryName(categoryDTO.getCategoryName());
-        CategoryModel updatedCategory = categoryRepository.save(existingCategory);
+        Category updatedCategory = categoryRepository.save(existingCategory);
 
         return modelMapper.map(updatedCategory, CategoryDTO.class);
     }
