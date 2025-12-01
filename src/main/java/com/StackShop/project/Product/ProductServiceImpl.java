@@ -25,11 +25,13 @@ private CategoryRepository categoryRepository;
 private ModelMapper modelMapper;
 
     @Override
-    public ProductDTO addProduct(Long categoryId, Product product) {
+    public ProductDTO addProduct(Long categoryId, ProductDTO productDTO) {
         Category category = categoryRepository.findById(categoryId).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Category not found with id: " + categoryId));
 
+        // I used this modelmapper because i used Product everywhere else it will give error
+        Product product = modelMapper.map(productDTO, Product.class);
         product.setImage("default.png");
         product.setCategory(category);
         double specialPrice = product.getPrice() - (product.getPrice() * product.getDiscount() / 100);
@@ -80,12 +82,14 @@ private ModelMapper modelMapper;
         return productResponse;    }
 
     @Override
-    public ProductDTO updateProduct(Long productId, Product product) {
+    public ProductDTO updateProduct(Long productId, ProductDTO productDTO) {
         // Get the existing product from the database
         // then update its details and save it back to the database
         Product existingProduct = productRepository.findById(productId).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Product not found with id: " + productId));
+
+        Product product = modelMapper.map(productDTO, Product.class);
         existingProduct.setProductName(product.getProductName());
         existingProduct.setDescription(product.getDescription());
         existingProduct.setQuantity(product.getQuantity());
@@ -98,7 +102,6 @@ private ModelMapper modelMapper;
         Product updatedProduct = productRepository.save(existingProduct);
 
         return modelMapper.map(updatedProduct, ProductDTO.class);
-      //  return null;
     }
 
     @Override
