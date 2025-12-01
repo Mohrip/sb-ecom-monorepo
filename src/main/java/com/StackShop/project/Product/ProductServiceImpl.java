@@ -101,5 +101,14 @@ private ModelMapper modelMapper;
       //  return null;
     }
 
+    @Override
+    public void deleteProduct(Long productId) {
+        Product existingProduct = productRepository.findById(productId).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Product not found with id: " + productId));
+        productRepository.delete(existingProduct);
+
+    }
+
 
 }
