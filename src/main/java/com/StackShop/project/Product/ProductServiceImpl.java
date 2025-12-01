@@ -79,5 +79,27 @@ private ModelMapper modelMapper;
         productResponse.setContent(productDTOs);
         return productResponse;    }
 
+    @Override
+    public ProductDTO updateProduct(Long productId, Product product) {
+        // Get the existing product from the database
+        // then update its details and save it back to the database
+        Product existingProduct = productRepository.findById(productId).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Product not found with id: " + productId));
+        existingProduct.setProductName(product.getProductName());
+        existingProduct.setDescription(product.getDescription());
+        existingProduct.setQuantity(product.getQuantity());
+        existingProduct.setDiscount(product.getDiscount());
+        existingProduct.setPrice(product.getPrice());
+        double specialPrice = product.getPrice() - (product.getPrice() * product.getDiscount() / 100);
+        existingProduct.setSpecialPrice(specialPrice);
+
+        // save the updated product to the database
+        Product updatedProduct = productRepository.save(existingProduct);
+
+        return modelMapper.map(updatedProduct, ProductDTO.class);
+      //  return null;
+    }
+
 
 }
