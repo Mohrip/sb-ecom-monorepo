@@ -7,9 +7,15 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -98,7 +104,6 @@ private ModelMapper modelMapper;
         double specialPrice = product.getPrice() - (product.getPrice() * product.getDiscount() / 100);
         existingProduct.setSpecialPrice(specialPrice);
 
-        // save the updated product to the database
         Product updatedProduct = productRepository.save(existingProduct);
 
         return modelMapper.map(updatedProduct, ProductDTO.class);
@@ -113,5 +118,34 @@ private ModelMapper modelMapper;
 
     }
 
+    @Override
+    public ProductDTO updateProductImage(Long productId, MultipartFile image) throws IOException {
+        Product ProductFromDb = productRepository.findById(productId).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Product not found with id: " + productId));
+        String path = "images/";
+        String fileName = uploadImage(path, image);
+        ProductFromDb.setImage(fileName);
+        Product updatedProduct = productRepository.save(ProductFromDb);
 
+        return modelMapper.map(updatedProduct, ProductDTO.class);
+    }
+
+    private String uploadImage(String path, MultipartFile file) throws IOException {
+        String originalFileName = file.getOriginalFilename();
+        String randomId = UUID.randomUUID().toString();
+        String fileName = randomId.concat(originalFileName.substring(originalFileName.lastIndexOf(".")));
+        String filePath = path + File.separator + fileName; // Changed from pathSeparator
+
+
+        File folder = new File(path);
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+
+            Files.copy(file.getInputStream(), Paths.get(filePath));
+
+        return fileName;
+
+    }
 }
