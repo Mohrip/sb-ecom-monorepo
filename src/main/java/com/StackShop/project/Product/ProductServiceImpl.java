@@ -36,7 +36,7 @@ private ModelMapper modelMapper;
                 new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Category not found with id: " + categoryId));
 
-        // I used this modelmapper because i used Product everywhere else it will give error
+        // I used this modelmapper because I used Product everywhere else it will give error
         Product product = modelMapper.map(productDTO, Product.class);
         product.setImage("default.png");
         product.setCategory(category);
