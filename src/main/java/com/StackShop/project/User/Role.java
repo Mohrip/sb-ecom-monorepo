@@ -1,0 +1,20 @@
+package com.StackShop.project.User;
+
+
+import jakarta.persistence.*;
+
+@Entity
+public class Role {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "role_id", unique = true, nullable = false)
+    private Integer roleId;
+
+    @Column(length = 20, name = "role_name")
+    private UserRole roleName;
+
+    public Role(UserRole roleName) {
+        this.roleName = roleName;
+    }
+}
