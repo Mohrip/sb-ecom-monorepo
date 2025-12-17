@@ -2,11 +2,14 @@ package com.StackShop.project.User;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Table(name = "roles")
 public class Role {
@@ -17,6 +20,7 @@ public class Role {
     private Integer roleId;
 
 
+    @ToString.Exclude
     @Enumerated(EnumType.STRING)
     @Column(length = 20, name = "role_name")
     private UserRole roleName;
