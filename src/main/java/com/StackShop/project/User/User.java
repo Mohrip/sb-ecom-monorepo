@@ -6,7 +6,12 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -35,5 +40,22 @@ public class User {
         this.email = email;
         this.password = password;
     }
+// relation type many to many with Role entity
+//One User can have MULTIPLE Roles (User can be both ADMIN and USER)
+//    One Role can belong to MULTIPLE Users (ADMIN role can be assigned to many users)
+
+//    PERSIST: When you save a User,
+//    automatically save any new Roles MERGE: When you update a User, automatically update the Roles
+
+    //  @JoinTable - The Bridge Table
+
+
+    @Setter
+    @Getter
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 
 }
