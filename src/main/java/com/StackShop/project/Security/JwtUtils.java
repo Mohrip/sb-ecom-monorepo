@@ -22,16 +22,17 @@ import java.util.Date;
 public class JwtUtils {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-    @Value("${stackshop.app.jwtSecret:stackshopSecretKey}")
+    @Value("${spring.app.jwtSecret:mySecretKeyThatIsAtLeast32CharactersLong}")
+    private String jwtSecret;
+
+    @Value("${spring.app.jwtExpirationMs:86400000}")
     private int jwtExpirationMs;
 
-    @Value("${stackshop.app.jwtExpirationMs:86400000}")
-    private String jwtSecret;
 
 
     public String getJwtFromHeader(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
-        logger.debug("Authorization Header: {}" + bearerToken);
+        logger.debug("Authorization Header: {}", bearerToken);
         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7); // this will remove "Bearer " prefix from the token
         }
