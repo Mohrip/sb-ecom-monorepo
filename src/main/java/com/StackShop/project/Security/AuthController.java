@@ -65,6 +65,7 @@ public class AuthController {
 
             //String jwtToken = jwtUtils.generateJwtTokenFromUsername(userDetails);
             //String jwtToken = jwtUtils.generateJwtTokenFromUsername(userDetails.getUsername());
+            //1
 
             ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
 
