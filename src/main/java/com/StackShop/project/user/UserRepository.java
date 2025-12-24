@@ -1,6 +1,5 @@
-package com.StackShop.project.security;
+package com.StackShop.project.user;
 
-import com.StackShop.project.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

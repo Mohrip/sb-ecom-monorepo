@@ -2,13 +2,13 @@ package com.StackShop.project.cart;
 
 import com.StackShop.project.product.Product;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "cart_items")
+@Data
 @NoArgsConstructor
-@AllArgsConstructor
+@Table(name = "cart_items")
 public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

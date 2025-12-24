@@ -1,6 +1,7 @@
 package com.StackShop.project.user;
 
 
+import com.StackShop.project.cart.Cart;
 import com.StackShop.project.product.Product;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -73,10 +74,14 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "address_id"))
     private List<Address> addresses = new ArrayList<>();
 
+    @ToString.Exclude
+    @OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    private Cart cart;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE},
             orphanRemoval = true)
-    private Set<Product> products;
+    private Set<Product> products = new HashSet<>();
+
 
 }

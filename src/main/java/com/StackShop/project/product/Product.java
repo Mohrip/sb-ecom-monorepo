@@ -1,5 +1,6 @@
 package com.StackShop.project.product;
 
+import com.StackShop.project.cart.CartItem;
 import com.StackShop.project.category.Category;
 import com.StackShop.project.user.User;
 import jakarta.persistence.*;
@@ -9,6 +10,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -44,4 +48,12 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "seller_id")
     private User user;
+
+    @OneToMany(mappedBy = "product", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<CartItem> products = new ArrayList<>();
+
+    public Double getspecialPrice() {
+        return specialPrice;
+
+    }
 }

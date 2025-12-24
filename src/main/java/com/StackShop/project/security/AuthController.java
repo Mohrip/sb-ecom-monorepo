@@ -2,6 +2,7 @@ package com.StackShop.project.security;
 
 import com.StackShop.project.user.Role;
 import com.StackShop.project.user.User;
+import com.StackShop.project.user.UserRepository;
 import com.StackShop.project.user.UserRole;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

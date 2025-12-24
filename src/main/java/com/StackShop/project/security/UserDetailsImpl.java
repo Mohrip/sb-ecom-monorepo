@@ -52,7 +52,8 @@ public class UserDetailsImpl implements UserDetails {
                 user.getUsername(),
                 user.getEmail(),
                 user.getPassword(),
-                List.of()
+               // List.of()
+                authorities
         );
     }
 
