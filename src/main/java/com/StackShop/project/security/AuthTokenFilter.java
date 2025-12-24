@@ -29,6 +29,19 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthTokenFilter.class);
 
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        String path = request.getServletPath();
+        return path.startsWith("/api/carts/") ||
+                path.startsWith("/api/cart/") ||
+                path.startsWith("/api/auth/") ||
+                path.startsWith("/swagger-ui/") ||
+                path.startsWith("/v3/api-docs/") ||
+                path.startsWith("/images/");
+    }
+
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
