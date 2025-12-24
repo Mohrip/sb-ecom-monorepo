@@ -2,8 +2,14 @@ package com.StackShop.project.cart;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 public interface CartService {
     public CartDTO addProductToCart( Long productId, Integer quantity);
-        // Implementation goes here
+
+    List<CartDTO> getAllCarts();
+
+    CartDTO getCart(String emailId, Long cartId);
+    // Implementation goes here
 
 }

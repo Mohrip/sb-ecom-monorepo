@@ -10,4 +10,9 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
     @Query("SELECT c FROM Cart c WHERE c.user.email = ?1")
     // ?1 refers to the first parameter of the method
     Cart findCartByEmail(String email);
+
+    // If you need to find a cart by both email and cartId you need to use Query annotation
+    // as well because Spring JPA can't auto generate this query due to email being unique in User entity not in Cart entity
+    @Query("SELECT c FROM Cart c WHERE c.user.email = ?1 AND c.cartId = ?2")
+    Cart findCartByEmailAndCartId(String emailId, Long cartId);
 }
