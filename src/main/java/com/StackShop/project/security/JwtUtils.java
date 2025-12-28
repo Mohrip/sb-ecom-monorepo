@@ -35,16 +35,6 @@ public class JwtUtils {
     private String jwtCookie;
 
 
-
-//    public String getJwtFromHeader(HttpServletRequest request) {
-//        String bearerToken = request.getHeader("Authorization");
-//        logger.debug("Authorization Header: {}", bearerToken);
-//        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
-//            return bearerToken.substring(7); // this will remove "Bearer " prefix from the token
-//        }
-//        return null;
-//    }
-
     // Here I will use cookies to store the JWT token
 
     public String getJwtFromCookies(HttpServletRequest request) {
@@ -67,9 +57,6 @@ public class JwtUtils {
                 .build();
         return cookie;
     }
-
-
-
 
     public String generateJwtTokenFromUsername(String username) {
        return Jwts.builder()

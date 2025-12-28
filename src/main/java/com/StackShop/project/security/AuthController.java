@@ -62,7 +62,6 @@ public class AuthController {
 
             //String jwtToken = jwtUtils.generateJwtTokenFromUsername(userDetails);
             //String jwtToken = jwtUtils.generateJwtTokenFromUsername(userDetails.getUsername());
-            //1
 
             ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
 
@@ -76,7 +75,6 @@ public class AuthController {
             UserInfoResponse response = new UserInfoResponse(userDetails.getId(),
                     userDetails.getUsername(), roles, jwtCookie.toString());
 
-           // return ResponseEntity.ok(response);
             return ResponseEntity.ok()
                     .header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
                     .body(response);
@@ -97,11 +95,9 @@ public class AuthController {
                         .body(new MessageResponse("Error: Email is already in use!"));
             }
 
-            // Create new user's account
             User user = new User(
                     signUpRequest.getUsername(),
                     signUpRequest.getEmail(),
-                    //signUpRequest.getPassword()
                     Encoder.encode(signUpRequest.getPassword())
             );
 
