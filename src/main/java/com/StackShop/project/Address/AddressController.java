@@ -14,11 +14,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class AddressController {
-   // private final AuthUtil authUtil;
-
-    public AddressController(AuthUtil authUtil) {
-        this.authUtil = authUtil;
-    }
 
     @Autowired
     AuthUtil authUtil;
@@ -28,11 +23,10 @@ public class AddressController {
 
     @PostMapping("/addresses")
     public ResponseEntity<AddressDTO> creatAddress(@Valid @RequestBody AddressDTO addressDTO) {
-       User user = authUtil.loggedInUser();
-       AddressDTO savedAddressDTO = addressService.createAddress(addressDTO, user);
-         return new ResponseEntity<>(savedAddressDTO, HttpStatus.CREATED);
+        User user = authUtil.loggedInUser();
+        AddressDTO savedAddressDTO = addressService.createAddress(addressDTO, user);
+        return new ResponseEntity<>(savedAddressDTO, HttpStatus.CREATED);
     }
-
 
     @GetMapping("/addresses")
     public ResponseEntity<List<AddressDTO>> getAllAddresses() {
@@ -40,6 +34,28 @@ public class AddressController {
         return new ResponseEntity<>(addressList, HttpStatus.OK);
     }
 
+    @GetMapping("/addresses/{addressId}")
+    public ResponseEntity<AddressDTO> getAddressById(@PathVariable Integer addressId) {
+        AddressDTO addressDTO = addressService.getAddressesById(addressId);
+        return new ResponseEntity<>(addressDTO, HttpStatus.OK);
+    }
 
+    @GetMapping("/users/addresses")
+    public ResponseEntity<List<AddressDTO>> getAllUserAddresses() {
+        User user = authUtil.loggedInUser();
+        List<AddressDTO> addressList = addressService.getUserAdresses(user);
+        return new ResponseEntity<>(addressList, HttpStatus.OK);
+    }
 
+    @PutMapping("/addresses/{addressId}")
+    public ResponseEntity<AddressDTO> updateAddress(@PathVariable Integer addressId, @Valid @RequestBody AddressDTO addressDTO) {
+        AddressDTO updatedAddressDTO = addressService.updateAddress(addressId, addressDTO);
+        return new ResponseEntity<>(updatedAddressDTO, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/addresses/{addressId}")
+    public ResponseEntity<String> deleteAddress(@PathVariable Integer addressId) {
+        String status = addressService.deleteAddress(addressId);
+        return new ResponseEntity<>(status, HttpStatus.OK);
+    }
 }
