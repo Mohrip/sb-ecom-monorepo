@@ -1,6 +1,7 @@
-package com.StackShop.project.user;
+package com.StackShop.project.Address;
 
 
+import com.StackShop.project.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -50,9 +51,10 @@ public class Address {
 
 
 
-    @ToString.Exclude
-    @ManyToMany(mappedBy = "addresses")
-    private List<User> users = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+    //private List<User> users = new ArrayList<>();
 
     public Address(String street, String buildingName, String city, String state, String zipCode, String country) {
         this.street = street;
