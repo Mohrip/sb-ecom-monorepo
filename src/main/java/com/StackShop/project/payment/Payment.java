@@ -1,5 +1,6 @@
-package com.StackShop.project.order;
+package com.StackShop.project.payment;
 
+import com.StackShop.project.order.Order;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -31,9 +32,10 @@ public class Payment {
     private String pgName;
 
     // I will create a custom constructor to create payment objects more easily without the order field
-    // I want to use factory pattern to create payment objects
-    public Payment(Long paymentId, String pgPaymentId, String pgStatus, String pgResponseMessage, String pgName) {
-        this.paymentId = paymentId;
+    // I want to use Strategy pattern to create payment objects
+    public Payment(String paymentMethod, String pgPaymentId, String pgStatus, String pgResponseMessage, String pgName) {
+       this.paymentMethod = paymentMethod;
+     //   this.paymentId = paymentId;
         this.pgPaymentId = pgPaymentId;
         this.pgStatus = pgStatus;
         this.pgResponseMessage = pgResponseMessage;

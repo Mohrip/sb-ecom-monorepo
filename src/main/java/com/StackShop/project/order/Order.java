@@ -1,6 +1,7 @@
 package com.StackShop.project.order;
 
 import com.StackShop.project.Address.Address;
+import com.StackShop.project.payment.Payment;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
