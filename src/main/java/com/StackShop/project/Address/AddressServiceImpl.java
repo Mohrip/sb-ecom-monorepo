@@ -27,7 +27,6 @@ public class AddressServiceImpl implements AddressService {
         List<Address> addressList = user.getAddresses();
         addressList.add(address);
         user.setAddresses(addressList);
-
         address.setUser(user);
         Address savedAddress = addressRepository.save(address);
 
@@ -73,6 +72,7 @@ public class AddressServiceImpl implements AddressService {
         user.getAddresses().removeIf(address -> address.getAddressId() == addressId);
         user.getAddresses().add(updatedAddress);
         userRepository.save(user);
+
         return modelMapper.map(updatedAddress, AddressDTO.class);
     }
 
@@ -84,6 +84,7 @@ public class AddressServiceImpl implements AddressService {
         user.getAddresses().removeIf(address -> address.getAddressId() == addressId);
         userRepository.save(user);
         addressRepository.delete(addressFromDb);
+
         return "Address deleted successfully with addressId: " + addressId;
     }
 }

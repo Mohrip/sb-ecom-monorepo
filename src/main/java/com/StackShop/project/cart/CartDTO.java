@@ -1,6 +1,5 @@
 package com.StackShop.project.cart;
 
-import com.StackShop.project.product.Product;
 import com.StackShop.project.product.ProductDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;

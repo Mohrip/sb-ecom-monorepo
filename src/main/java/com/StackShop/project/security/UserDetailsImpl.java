@@ -31,7 +31,6 @@ public class UserDetailsImpl implements UserDetails {
 
     @JsonIgnore
     private String password;
-    // collection of roles/authorities assigned to the user
     private Collection<? extends GrantedAuthority> authorities;
 
     public UserDetailsImpl(Integer id, String username, String email, String password, Collection<? extends GrantedAuthority> authorities) {
@@ -53,7 +52,6 @@ public class UserDetailsImpl implements UserDetails {
                 user.getUsername(),
                 user.getEmail(),
                 user.getPassword(),
-               // List.of()
                 authorities
         );
     }
@@ -75,25 +73,21 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-      //  return UserDetails.super.isAccountNonExpired();
         return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-     //   return UserDetails.super.isAccountNonLocked();
         return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-       // return UserDetails.super.isCredentialsNonExpired();
         return true;
     }
 
     @Override
     public boolean isEnabled() {
-        //return UserDetails.super.isEnabled();
         return true;
     }
 

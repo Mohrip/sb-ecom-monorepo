@@ -5,7 +5,6 @@ import com.StackShop.project.util.AuthUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import com.StackShop.project.cart.CartService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -48,14 +47,10 @@ public class CartController {
 
     @PutMapping("/cart/products/{productId}/quantity/{operation}")
     public ResponseEntity<CartDTO> updateCartProduct(@PathVariable Long productId, @PathVariable String operation) {
-       // String emailId = authUtil.loggedInEmail();
-       // Cart cart = cartRepository.findCartByEmail(emailId);
-       // Long cartId = cart.getCartId();
         CartDTO cartDTO = cartService.updateCartItemQuantity( productId, operation.equalsIgnoreCase("delete") ? -1 : 1);
         return new ResponseEntity<CartDTO>(cartDTO, HttpStatus.OK);
     }
 
-    // Delete product from cart
     @DeleteMapping("/carts/{cartId}/product/{productId}")
     public ResponseEntity<String> deleteProductFromCart(@PathVariable Long productId, @PathVariable Long cartId) {
         String status = cartService.deleteProductFromCart(productId, cartId);

@@ -35,7 +35,6 @@ public class Payment {
     // I want to use Strategy pattern to create payment objects
     public Payment(String paymentMethod, String pgPaymentId, String pgStatus, String pgResponseMessage, String pgName) {
        this.paymentMethod = paymentMethod;
-     //   this.paymentId = paymentId;
         this.pgPaymentId = pgPaymentId;
         this.pgStatus = pgStatus;
         this.pgResponseMessage = pgResponseMessage;

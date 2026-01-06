@@ -17,7 +17,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-// Remove @Component - we create this as a bean in WebSecurityConfig
+// Remove @Component.... we create this as a bean in WebSecurityConfig
 public class AuthTokenFilter extends OncePerRequestFilter {
 
     @Autowired
@@ -70,7 +70,6 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     }
 
     private String parseJwt(HttpServletRequest request) {
-        // First, try to get from Authorization header
         String headerAuth = request.getHeader("Authorization");
         logger.debug("Authorization header: {}", headerAuth);
 
@@ -80,7 +79,6 @@ public class AuthTokenFilter extends OncePerRequestFilter {
             return token;
         }
 
-        // Fallback: try to get from cookie
         String jwt = jwtUtils.getJwtFromCookies(request);
         if (jwt != null) {
             logger.debug("Got JWT from cookie");

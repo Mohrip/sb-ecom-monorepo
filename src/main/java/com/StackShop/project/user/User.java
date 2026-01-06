@@ -49,6 +49,7 @@ public class User {
         this.email = email;
         this.password = password;
     }
+
 // relation type many to many with Role entity
 //One User can have MULTIPLE Roles (User can be both ADMIN and USER)
 //    One Role can belong to MULTIPLE Users (ADMIN role can be assigned to many users)

@@ -35,7 +35,6 @@ public class JwtUtils {
     private String jwtCookie;
 
 
-    // Here I will use cookies to store the JWT token
 
     public String getJwtFromCookies(HttpServletRequest request) {
         Cookie cookie = WebUtils.getCookie(request, jwtCookie);

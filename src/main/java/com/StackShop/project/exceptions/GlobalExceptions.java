@@ -25,10 +25,6 @@ public class GlobalExceptions {
         return new ResponseEntity<Map<String, String>>(response, HttpStatus.BAD_REQUEST);
 }
 
-//public ResponseEntity<String> myResponseNotFoundExceptionHandler(Exception ex){
-//    return new ResponseEntity<String>(ex.getMessage(), HttpStatus.NOT_FOUND);
-//}
-
 
 
 

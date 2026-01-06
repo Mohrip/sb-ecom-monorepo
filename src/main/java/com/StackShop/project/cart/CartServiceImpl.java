@@ -13,9 +13,7 @@ import com.StackShop.project.exceptions.APIException;
 import com.StackShop.project.util.AuthUtil;
 
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -42,7 +40,6 @@ public class CartServiceImpl implements CartService {
     public CartDTO addProductToCart(Long productId, Integer quantity) {
         Cart cart = createNewCart();
 
-        // Retrieve product details
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new ResourceNotFoundException("Product", "productId", productId));
 
@@ -118,7 +115,6 @@ public class CartServiceImpl implements CartService {
         Cart cart = cartRepository.findCartByEmailAndCartId(emailId, cartId);
         if (cart == null) {
             throw new ResourceNotFoundException("Cart", "cartId", cartId);
-       // return null;
     }
         CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
         cart.getCartItems().forEach(c-> c.getProduct().setQuantity(c.getQuantity()));

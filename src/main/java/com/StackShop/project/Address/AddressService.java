@@ -1,7 +1,6 @@
 package com.StackShop.project.Address;
 
 import com.StackShop.project.user.User;
-import jakarta.validation.Valid;
 
 import java.util.List;
 
