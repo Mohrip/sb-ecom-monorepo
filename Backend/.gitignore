@@ -13,8 +13,8 @@ target/
 .sts4-cache
 
 ### IntelliJ IDEA ###
-.idea
-.idea/
+Backend/.idea
+Backend/.idea/
 *.iml
 *.ipr
 out/
